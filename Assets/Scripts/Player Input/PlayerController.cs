@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    //https://www.youtube.com/watch?v=mRkFj8J7y_I
-
     private PlayerInputActions playerInputActions;
     private Camera _mainCamera;
 
@@ -20,7 +16,6 @@ public class PlayerController : MonoBehaviour
     {
         playerInputActions.Enable();
         playerInputActions.Standard.Clicked.performed += Click;
-        Debug.Log("ola");
     }
 
     public void Click(InputAction.CallbackContext context)
@@ -30,6 +25,12 @@ public class PlayerController : MonoBehaviour
         var rayHit = Physics2D.GetRayIntersection(_mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue()));
         if (!rayHit.collider) return;
 
-        //rayHit.collider.gameObject.GetComponent<Enemy>().OnKilled();
+        // Si el objeto tocado es un PeppyCat, llamar a su método OnMouseDown
+        PeppyCat peppyCat = rayHit.collider.gameObject.GetComponent<PeppyCat>();
+        if (peppyCat != null)
+        {
+            peppyCat.OnMouseDown();
+        }
     }
 }
+
