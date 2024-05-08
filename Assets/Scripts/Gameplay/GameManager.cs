@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public List<Transform> spawnPoints;
     public List<Transform> followPoints;
+    public TextMeshProUGUI scoreText;
     public float spawnRate = 1.0f;
     private float timer = 0.0f;
 
@@ -13,12 +15,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SpriteController.OnSpriteClicked += HandleSpriteClicked;
+        SpriteController.OnGameOver += HandleGameOver;
     }
 
     void OnDestroy()
     {
         //deja de escuchar el evento cuando el GameManager sea destruido
         SpriteController.OnSpriteClicked -= HandleSpriteClicked;
+        SpriteController.OnGameOver -= HandleGameOver;
     }
 
     void Update()
@@ -51,7 +55,13 @@ public class GameManager : MonoBehaviour
     void HandleSpriteClicked(SpriteController sprite)
     {
         clickedSpritesCount++;
-        Debug.Log("Sprites clickeados: " + clickedSpritesCount);
+        scoreText.text = " " + clickedSpritesCount;
+    }
+
+    void HandleGameOver()
+    {
+        // Muestra el mensaje de "Game Over"
+        Debug.Log("Gameover chabito");
     }
 }
 

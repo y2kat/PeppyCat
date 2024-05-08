@@ -8,9 +8,16 @@ public class SpriteController : MonoBehaviour
     public List<Transform> pointsToFollow;
     private int currentPointIndex = 0;
 
+    // Evento que se dispara cuando el sprite es destruido
     public static event Action<SpriteController> OnSpriteDestroyed = delegate { };
 
+    // Evento que se dispara cuando el sprite es clickeado
     public static event Action<SpriteController> OnSpriteClicked = delegate { };
+
+    // Evento que se dispara cuando se cumple la condición de derrota
+    public static event Action OnGameOver = delegate { };
+
+    private bool isClicked = false;
 
     void Update()
     {
@@ -23,16 +30,21 @@ public class SpriteController : MonoBehaviour
 
     void OnMouseDown()
     {
+        isClicked = true;
         OnSpriteClicked(this);
         ObjectPooling.Instance.DespawnObject(gameObject);
     }
 
     void OnBecameInvisible()
     {
-        OnSpriteDestroyed(this);
-        ObjectPooling.Instance.DespawnObject(gameObject);
+        if (!isClicked)
+        {
+            OnGameOver();
+        }
+        Destroy(gameObject);
     }
 }
+
 
 
 
