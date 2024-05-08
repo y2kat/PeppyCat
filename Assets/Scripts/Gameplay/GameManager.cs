@@ -1,40 +1,61 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject[] spritePrefabs;
+    public List<Transform> spawnPoints;
+    public List<Transform> followPoints;
     public float spawnRate = 1.0f;
-    public int score = 0;
+    private float timer = 0.0f;
+
+    private int clickedSpritesCount = 0;
 
     void Start()
     {
-        InvokeRepeating("SpawnSprite", spawnRate, spawnRate);
+        SpriteController.OnSpriteClicked += HandleSpriteClicked;
+    }
+
+    void OnDestroy()
+    {
+        //deja de escuchar el evento cuando el GameManager sea destruido
+        SpriteController.OnSpriteClicked -= HandleSpriteClicked;
+    }
+
+    void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer >= spawnRate)
+        {
+            SpawnSprite();
+            timer = 0.0f;
+        }
     }
 
     void SpawnSprite()
     {
-        GameObject spritePrefab = spritePrefabs[Random.Range(0, spritePrefabs.Length)];
+        GameObject sprite = ObjectPooling.Instance.RequestObject();
 
-        bool spawnFromLeft = Random.value < 0.5f;
+        //establece la posición inicial del sprite en un punto de generación específico
+        int spawnPointIndex = Random.Range(0, spawnPoints.Count);
+        sprite.transform.position = spawnPoints[spawnPointIndex].position;
 
-        Vector2 spawnPosition = new Vector2(spawnFromLeft ? 0 : Screen.width, Random.Range(0, Screen.height));
-
-        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(spawnPosition);
-
-        GameObject sprite = Instantiate(spritePrefab, worldPosition, Quaternion.identity);
-
+        //velocidad del sprite
         SpriteController spriteController = sprite.GetComponent<SpriteController>();
-        spriteController.direction = spawnFromLeft ? Vector2.right : Vector2.left;
+        spriteController.speed = Random.Range(1f, 5f);
+
+        //puntos a seguir del sprite
+        spriteController.pointsToFollow.Clear();
+        spriteController.pointsToFollow.Add(followPoints[spawnPointIndex]);
     }
 
-    public void IncreaseScore()
+    void HandleSpriteClicked(SpriteController sprite)
     {
-        score++;
-    }
-
-    public void EndGame()
-    {
-        CancelInvoke("SpawnSprite");
-        Debug.Log("Game Over");
+        clickedSpritesCount++;
+        Debug.Log("Sprites clickeados: " + clickedSpritesCount);
     }
 }
+
+
+
+
+
