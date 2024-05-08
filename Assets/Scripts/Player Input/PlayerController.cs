@@ -24,13 +24,6 @@ public class PlayerController : MonoBehaviour
 
         var rayHit = Physics2D.GetRayIntersection(_mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue()));
         if (!rayHit.collider) return;
-
-        // Si el objeto tocado es un PeppyCat, llamar a su método OnMouseDown
-        PeppyCat peppyCat = rayHit.collider.gameObject.GetComponent<PeppyCat>();
-        if (peppyCat != null)
-        {
-            peppyCat.OnMouseDown();
-        }
     }
 }
 
