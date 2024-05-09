@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     private int clickedSpritesCount = 0;
 
+    private float gameTime = 0.0f; // Tiempo de juego
+
     void Start()
     {
         SpriteController.OnSpriteClicked += HandleSpriteClicked;
@@ -29,8 +31,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        gameTime += Time.deltaTime;
         timer += Time.deltaTime;
-        if (timer >= spawnRate)
+        if (timer >= 1.0f / (1.0f + gameTime * 0.1f)) //la tasa de aparición aumenta con el tiempo de juego
         {
             SpawnSprite();
             timer = 0.0f;
@@ -47,7 +50,7 @@ public class GameManager : MonoBehaviour
 
         //velocidad del sprite
         SpriteController spriteController = sprite.GetComponent<SpriteController>();
-        spriteController.speed = Random.Range(1f, 5f);
+        spriteController.speed = Random.Range(1f, 5f) + gameTime * 0.05f; //aumenta en 0.1 por segundo
 
         //puntos a seguir del sprite
         spriteController.pointsToFollow.Clear();

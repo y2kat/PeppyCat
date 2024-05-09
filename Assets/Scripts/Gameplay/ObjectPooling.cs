@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class ObjectPooling : MonoBehaviour
+public class ObjectPooling : MonoBehaviour //bing ai me ayudó a solucionar dudas que tenía en este código así mismo, recibí ayuda en la lógica por parte de mi compañero andré xd
 {
     public static ObjectPooling Instance { get; private set; }
 

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class SpriteController : MonoBehaviour
+public class SpriteController : MonoBehaviour //bing ai me ayudó a completar este código:
 {
     public float speed;
     public List<Transform> pointsToFollow;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Menu : MonoBehaviour
@@ -31,6 +32,7 @@ public class Menu : MonoBehaviour
 
     public void returnToMenu()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1.0f; 
         level.SetActive(false);
         menu.SetActive(true);
@@ -46,5 +48,6 @@ public class Menu : MonoBehaviour
         //highScoreText.text = "Highscore: " + highScore;
 
         deathPanel.SetActive(true);
+        Time.timeScale = 0.0f;
     }
 }
