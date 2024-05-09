@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     void HandleSpriteClicked(SpriteController sprite)
     {
         clickedSpritesCount++;
-        scoreText.text = " " + clickedSpritesCount;
+        scoreText.text = "" + clickedSpritesCount;
     }
 
     void HandleGameOver()
