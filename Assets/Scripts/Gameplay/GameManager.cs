@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public float spawnRate = 1.0f;
     private float timer = 0.0f;
 
+    public Menu menuScript;
+
     private int clickedSpritesCount = 0;
 
     void Start()
@@ -62,6 +64,7 @@ public class GameManager : MonoBehaviour
     {
         // Muestra el mensaje de "Game Over"
         Debug.Log("Gameover chabito");
+        menuScript.showDeathScreen();
     }
 }
 

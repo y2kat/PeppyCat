@@ -682,8 +682,6 @@ MonoBehaviour:
   level: {fileID: 1468501293}
   menu: {fileID: 813861559}
   deathPanel: {fileID: 813861556}
-  scoreText: {fileID: 0}
-  highScoreText: {fileID: 0}
 --- !u!1 &876944544
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,6 +904,7 @@ MonoBehaviour:
   - {fileID: 2069635491}
   scoreText: {fileID: 876944546}
   spawnRate: 2
+  menuScript: {fileID: 813861561}
 --- !u!1 &1262142590
 GameObject:
   m_ObjectHideFlags: 0
